@@ -6,7 +6,6 @@ import soptkathon_iOS1.global.common.entity.SuccessCode;
 import soptkathon_iOS1.global.exception.BaseErrorCode;
 
 @Getter
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public class BaseResponse<T> {
     private final int status;
     private final String code;
