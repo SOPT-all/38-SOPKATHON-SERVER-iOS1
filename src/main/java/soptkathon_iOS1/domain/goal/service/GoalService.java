@@ -13,10 +13,14 @@ import soptkathon_iOS1.domain.user.entity.User;
 import soptkathon_iOS1.domain.user.exception.UserErrorCode;
 import soptkathon_iOS1.domain.user.exception.UserException;
 import soptkathon_iOS1.domain.user.repository.UserRepository;
+import soptkathon_iOS1.global.exception.CustomException;
+import soptkathon_iOS1.global.exception.ErrorCode;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.time.format.ResolverStyle;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
@@ -24,6 +28,9 @@ import java.util.List;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class GoalService {
+    private static final DateTimeFormatter GOAL_DATE_FORMATTER = DateTimeFormatter.ofPattern("uuuu.MM.dd")
+            .withResolverStyle(ResolverStyle.STRICT);
+
     private final GoalRepository goalRepository;
     private final UserRepository userRepository;
 
@@ -45,8 +52,7 @@ public class GoalService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new UserException(UserErrorCode.USER_NOT_FOUND));
 
-        LocalDateTime expiredAt = LocalDate.parse(request.expiredAt(), DateTimeFormatter.ofPattern("yyyy.MM.dd"))
-                .atTime(23, 59, 59);
+        LocalDateTime expiredAt = parseExpiredAt(request.expiredAt());
 
         Goal goal = Goal.builder()
                 .user(user)
@@ -58,6 +64,14 @@ public class GoalService {
         Goal savedGoal = goalRepository.save(goal);
 
         return GoalCreateResponse.from(savedGoal);
+    }
+
+    private LocalDateTime parseExpiredAt(String expiredAt) {
+        try {
+            return LocalDate.parse(expiredAt, GOAL_DATE_FORMATTER).atTime(23, 59, 59);
+        } catch (DateTimeParseException e) {
+            throw new CustomException(ErrorCode.INVALID_INPUT);
+        }
     }
 
     private String calculateDDay(Goal goal) {

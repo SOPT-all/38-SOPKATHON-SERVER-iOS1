@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,7 +41,7 @@ public class GoalController {
     @PostMapping("/{userId}/goals")
     public ResponseEntity<BaseResponse<GoalCreateResponse>> createGoal(
             @Parameter(description = "사용자 ID") @PathVariable Long userId,
-            @RequestBody GoalCreateRequest request
+            @Valid @RequestBody GoalCreateRequest request
     ) {
         GoalCreateResponse response = goalService.createGoal(userId, request);
         return ResponseEntity.status(HttpStatus.CREATED)
