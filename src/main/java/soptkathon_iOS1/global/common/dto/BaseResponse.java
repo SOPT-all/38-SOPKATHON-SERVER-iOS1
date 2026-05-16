@@ -1,15 +1,20 @@
 package soptkathon_iOS1.global.common.dto;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import soptkathon_iOS1.global.common.entity.SuccessCode;
 import soptkathon_iOS1.global.exception.BaseErrorCode;
 
 @Getter
+@Schema(description = "공통 응답 형식")
 public class BaseResponse<T> {
+    @Schema(description = "HTTP 상태 코드", example = "200")
     private final int status;
+    @Schema(description = "응답 코드", example = "GETSUCCESS")
     private final String code;
+    @Schema(description = "응답 메시지", example = "조회에 성공하였습니다.")
     private final String message;
+    @Schema(description = "응답 데이터")
     private final T data;
 
     private BaseResponse(int status, String code, String message, T data) {
