@@ -88,20 +88,33 @@ public class FuneralController {
             ),
             @ApiResponse(
                     responseCode = "404",
-                    description = "목표를 찾을 수 없음",
+                    description = "사용자 또는 목표를 찾을 수 없음",
                     content = @Content(
                             mediaType = "application/json",
-                            examples = @ExampleObject(
-                                    name = "목표 없음",
-                                    value = """
-                                            {
-                                              "status": 404,
-                                              "code": "NOT_FOUND",
-                                              "message": "리소스를 찾을 수 없습니다.",
-                                              "data": null
-                                            }
-                                            """
-                            )
+                            examples = {
+                                    @ExampleObject(
+                                            name = "사용자 없음",
+                                            value = """
+                                                    {
+                                                      "status": 404,
+                                                      "code": "USER_001",
+                                                      "message": "사용자를 찾을 수 없습니다.",
+                                                      "data": null
+                                                    }
+                                                    """
+                                    ),
+                                    @ExampleObject(
+                                            name = "목표 없음",
+                                            value = """
+                                                    {
+                                                      "status": 404,
+                                                      "code": "GOAL_001",
+                                                      "message": "목표를 찾을 수 없습니다.",
+                                                      "data": null
+                                                    }
+                                                    """
+                                    )
+                            }
                     )
             ),
             @ApiResponse(

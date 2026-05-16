@@ -10,8 +10,12 @@ import soptkathon_iOS1.domain.funeral.dto.CondolenceResponse;
 import soptkathon_iOS1.domain.funeral.dto.FuneralOwnerResponse;
 import soptkathon_iOS1.domain.funeral.dto.FuneralResponse;
 import soptkathon_iOS1.domain.goal.entity.Goal;
+import soptkathon_iOS1.domain.goal.exception.GoalErrorCode;
+import soptkathon_iOS1.domain.goal.exception.GoalException;
 import soptkathon_iOS1.domain.goal.repository.GoalRepository;
 import soptkathon_iOS1.domain.user.entity.User;
+import soptkathon_iOS1.domain.user.exception.UserErrorCode;
+import soptkathon_iOS1.domain.user.exception.UserException;
 import soptkathon_iOS1.domain.user.repository.UserRepository;
 import soptkathon_iOS1.global.exception.CustomException;
 import soptkathon_iOS1.global.exception.ErrorCode;
@@ -29,9 +33,9 @@ public class FuneralService {
 
     public FuneralResponse getFuneral(Long viewerId, Long goalId) {
         User viewer = userRepository.findById(viewerId)
-                .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND));
+                .orElseThrow(() -> new UserException(UserErrorCode.USER_NOT_FOUND));
         Goal goal = goalRepository.findById(goalId)
-                .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND));
+                .orElseThrow(() -> new GoalException(GoalErrorCode.GOAL_NOT_FOUND));
 
         validateAccess(viewer, goal.getUser());
 

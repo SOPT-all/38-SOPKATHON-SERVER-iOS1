@@ -7,9 +7,9 @@ import soptkathon_iOS1.domain.friend.dto.FriendResponse;
 import soptkathon_iOS1.domain.friendship.entity.Friendship;
 import soptkathon_iOS1.domain.friendship.repository.FriendshipRepository;
 import soptkathon_iOS1.domain.user.entity.User;
+import soptkathon_iOS1.domain.user.exception.UserErrorCode;
+import soptkathon_iOS1.domain.user.exception.UserException;
 import soptkathon_iOS1.domain.user.repository.UserRepository;
-import soptkathon_iOS1.global.exception.CustomException;
-import soptkathon_iOS1.global.exception.ErrorCode;
 
 import java.util.List;
 
@@ -23,7 +23,7 @@ public class FriendService {
 
     public List<FriendResponse> getFriends(Long userId) {
         if (!userRepository.existsById(userId)) {
-            throw new CustomException(ErrorCode.NOT_FOUND);
+            throw new UserException(UserErrorCode.USER_NOT_FOUND);
         }
 
         return friendshipRepository.findAllByUserId(userId)
