@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @OpenAPIDefinition(
         servers = {
-                @Server(url = "/")
+                @Server(url = "https://rip.sopkathon-ios1.p-e.kr")
         }
 )
 public class SwaggerConfig {
