@@ -37,11 +37,11 @@ public class FriendService {
                 ? friendship.getUserB()
                 : friendship.getUserA();
 
-        return FriendResponse.builder()
-                .friendId(friend.getId())
-                .nickname(friend.getNickname())
-                .friendshipId(friendship.getId())
-                .createdAt(friendship.getCreatedAt())
-                .build();
+        return new FriendResponse(
+                friend.getId(),
+                friend.getNickname(),
+                friendship.getId(),
+                friendship.getCreatedAt()
+        );
     }
 }

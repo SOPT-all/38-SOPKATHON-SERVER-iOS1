@@ -11,7 +11,13 @@ public enum SuccessCode {
 
     // 목표
     GET_GOAL_LIST_SUCCESS(200, "GET_GOAL_LIST_SUCCESS", "목표 리스트 조회에 성공하였습니다."),
-    CREATE_GOAL_SUCCESS(201, "CREATE_GOAL_SUCCESS", "목표 생성에 성공하였습니다.");
+    CREATE_GOAL_SUCCESS(201, "CREATE_GOAL_SUCCESS", "목표 생성에 성공하였습니다."),
+
+    // 친구
+    GET_FRIEND_LIST_SUCCESS(200, "GET_FRIEND_LIST_SUCCESS", "친구 목록 조회에 성공하였습니다."),
+
+    // 장례식장
+    GET_FUNERAL_SUCCESS(200, "GET_FUNERAL_SUCCESS", "장례식장 조회에 성공하였습니다.");
 
     private final int status;
     private final String code;

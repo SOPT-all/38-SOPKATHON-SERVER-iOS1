@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,8 +40,8 @@ public class FuneralController {
                                     value = """
                                             {
                                               "status": 200,
-                                              "code": "GETSUCCESS",
-                                              "message": "조회에 성공하였습니다.",
+                                              "code": "GET_FUNERAL_SUCCESS",
+                                              "message": "장례식장 조회에 성공하였습니다.",
                                               "data": {
                                                 "goalId": 1,
                                                 "title": "다이어트",
@@ -123,15 +124,17 @@ public class FuneralController {
             )
     })
     @GetMapping("/{userId}/goals/{goalId}/funeral")
-    public BaseResponse<FuneralResponse> getFuneral(
+    public ResponseEntity<BaseResponse<FuneralResponse>> getFuneral(
             @Parameter(description = "장례식장에 접근한 사용자 ID", example = "1")
             @PathVariable Long userId,
             @Parameter(description = "장례식장을 조회할 목표 ID", example = "1")
             @PathVariable Long goalId
     ) {
-        return BaseResponse.success(
-                SuccessCode.GET_SUCCESS,
-                funeralService.getFuneral(userId, goalId)
+        return ResponseEntity.ok(
+                BaseResponse.success(
+                        SuccessCode.GET_FUNERAL_SUCCESS,
+                        funeralService.getFuneral(userId, goalId)
+                )
         );
     }
 }
